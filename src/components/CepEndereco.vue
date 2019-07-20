@@ -58,6 +58,7 @@
 <script>
 import brasil from "../assets/brasil.json";
 import estados from "../assets/estados.json";
+import { EventBus } from "@/main.js";
 export default {
   data: () => ({
     descriptionLimit: 60,
@@ -80,6 +81,9 @@ export default {
       this.isLoading = false;
       this.search = null;
       this.entries = [];
+      setTimeout(() => {
+        EventBus.$emit("redraw");
+      }, 500);
     },
     fetch(val) {
       this.isLoading = true;
@@ -115,12 +119,18 @@ export default {
     fields() {
       if (!this.pesquisa.rua) return [];
 
-      return Object.keys(this.pesquisa.rua).map(key => {
+      const fields = Object.keys(this.pesquisa.rua).map(key => {
         return {
           key,
           value: this.pesquisa.rua[key] || "n/a"
         };
       });
+
+      setTimeout(() => {
+        EventBus.$emit("redraw");
+      }, 400);
+
+      return fields;
     },
     items() {
       return this.entries.map(entry => {
@@ -139,7 +149,6 @@ export default {
   watch: {
     search: function(val) {
       if (val.length < 3) return;
-      if (this.items.length > 0) return;
       if (this.isLoading) return;
 
       this.fetchEntriesDebounced(val);

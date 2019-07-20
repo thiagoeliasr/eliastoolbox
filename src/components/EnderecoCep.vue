@@ -32,13 +32,14 @@
 </template>
 
 <script>
+import { EventBus } from "@/main.js";
 export default {
   data: () => ({
     entries: [],
     isLoading: false,
     search: null,
     pesquisa: {
-      cep: '',
+      cep: ""
     }
   }),
   methods: {
@@ -47,11 +48,15 @@ export default {
       this.isLoading = false;
       this.search = null;
       this.entries = [];
+
+      setTimeout(() => {
+        EventBus.$emit("redraw");
+      }, 500);
     },
     fetch(val) {
       this.isLoading = true;
 
-      const url = `https://viacep.com.br/ws/${this.pesquisa.cep}/json/`
+      const url = `https://viacep.com.br/ws/${this.pesquisa.cep}/json/`;
       fetch(url)
         .then(res => res.json())
         .then(res => {
@@ -60,6 +65,10 @@ export default {
         })
         .catch(err => console.log(err))
         .finally(() => (this.isLoading = false));
+
+      setTimeout(() => {
+        EventBus.$emit("redraw");
+      }, 500);
     },
     fetchEntriesDebounced(val) {
       clearTimeout(this._timerId);
@@ -95,12 +104,12 @@ export default {
   },
 
   watch: {
-    'pesquisa.cep': function(val) {
+    "pesquisa.cep": function(val) {
       if (val.length != 8) return;
       if (this.isLoading) return;
 
       this.fetchEntriesDebounced(val);
-    },
+    }
   }
 };
 </script>

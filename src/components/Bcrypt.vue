@@ -35,21 +35,30 @@
 </template>
 
 <script>
+import { EventBus } from "@/main.js";
 export default {
   data: () => ({
-    string: '',
+    string: "",
     encodedString: null
   }),
   methods: {
     encode() {
       let bcrypt = require("bcryptjs");
       this.encodedString = bcrypt.hashSync(this.string, bcrypt.genSaltSync(10));
+
+      setTimeout(() => {
+        EventBus.$emit("redraw");
+      }, 500);
     },
     clear() {
-      this.string = '';
+      this.string = "";
       this.encodedString = null;
+
+      setTimeout(() => {
+        EventBus.$emit("redraw");
+      }, 500);
     }
-  },
+  }
 };
 </script>
 

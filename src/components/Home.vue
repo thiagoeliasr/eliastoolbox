@@ -22,6 +22,8 @@ import CepEndereco from "./CepEndereco";
 import EnderecoCep from "./EnderecoCep";
 import Bcrypt from "./Bcrypt";
 import BcryptDecrypt from "./BcryptDecrypt";
+import { EventBus } from "@/main.js"
+
 export default {
   data: () => ({}),
   components: {
@@ -30,7 +32,18 @@ export default {
     Bcrypt,
     BcryptDecrypt
   },
-  created: function() {}
+  created: function() {
+    EventBus.$on('redraw', this.redraw);
+  },
+  beforeDestroy: function() {
+    EventBus.off('redraw');
+  },
+  methods: {
+    redraw() {
+      console.log('Redrawing Grid');
+      this.$redrawVueMasonry();
+    }
+  }
 };
 </script>
 

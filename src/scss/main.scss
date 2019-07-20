@@ -6,7 +6,6 @@
     width: 31%;
   }
 
-
   @include for-phone-only {
       .item {
           width: 98%;
@@ -22,5 +21,15 @@
   @include for-desktop-up {
       .item {
           width: 48%;
+      }
+  }
+
+  .headline {
+      span {
+        &.title {
+            position: relative;
+            top: 4px;
+            margin-left: 10px;
+        }
       }
   }

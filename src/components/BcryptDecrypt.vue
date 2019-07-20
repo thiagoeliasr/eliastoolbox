@@ -43,24 +43,34 @@
 </template>
 
 <script>
+import { EventBus } from "@/main.js";
 export default {
   data: () => ({
-    string: '',
-    encryptedString: '',
+    string: "",
+    encryptedString: "",
     result: null
   }),
   methods: {
     encode() {
       let bcrypt = require("bcryptjs");
-      this.result = bcrypt.compareSync(this.string, this.encryptedString) ? 
-        'String bate com hash' : 'String NÃO bate com hash';
+      this.result = bcrypt.compareSync(this.string, this.encryptedString)
+        ? "String bate com hash"
+        : "String NÃO bate com hash";
+
+      setTimeout(() => {
+        EventBus.$emit("redraw");
+      }, 500);
     },
     clear() {
-      this.string = '';
-      this.encryptedString = '';
+      this.string = "";
+      this.encryptedString = "";
       this.result = null;
+
+      setTimeout(() => {
+        EventBus.$emit("redraw");
+      }, 500);
     }
-  },
+  }
 };
 </script>
 

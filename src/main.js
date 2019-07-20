@@ -8,6 +8,8 @@ Vue.use(VueMasonryPlugin)
 
 Vue.config.productionTip = false
 
+export const EventBus = new Vue();
+
 new Vue({
   render: h => h(App),
  iconfont: 'fa'
