@@ -1,0 +1,26 @@
+  .item {
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    width: 31%;
+  }
+
+
+  @include for-phone-only {
+      .item {
+          width: 98%;
+      }
+  }
+
+  @include for-tablet-portrait-up {
+      .item {
+          width: 48%;
+      }
+  }
+
+  @include for-desktop-up {
+      .item {
+          width: 48%;
+      }
+  }

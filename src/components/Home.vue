@@ -1,27 +1,38 @@
 <template>
-  <v-container grid-list-md>
-    <v-layout row wrap>
-      <v-flex xs12 md6 lg6>
-        <CepEndereco/>
-      </v-flex>
-      <v-flex xs12 md6 lg6>
-        <EnderecoCep/>
-      </v-flex>
-    </v-layout>
-  </v-container>
+
+<div v-masonry transition-duration="0.3s" item-selector=".item">
+    <div v-masonry-tile class="item">
+      <CepEndereco/>
+    </div>
+    <div v-masonry-tile class="item">
+      <EnderecoCep/>
+    </div>
+    <div v-masonry-tile class="item">
+      <Bcrypt/>
+    </div>
+    <div v-masonry-tile class="item">
+      <BcryptDecrypt/>
+    </div>
+</div>
+
 </template>
 
 <script>
-import CepEndereco from './CepEndereco'
-import EnderecoCep from './EnderecoCep'
+import CepEndereco from "./CepEndereco";
+import EnderecoCep from "./EnderecoCep";
+import Bcrypt from "./Bcrypt";
+import BcryptDecrypt from "./BcryptDecrypt";
 export default {
-  data: () => ({ }),
+  data: () => ({}),
   components: {
     CepEndereco,
-    EnderecoCep
-  }
+    EnderecoCep,
+    Bcrypt,
+    BcryptDecrypt
+  },
+  created: function() {}
 };
 </script>
 
-<style>
+<style lang="scss">
 </style>
