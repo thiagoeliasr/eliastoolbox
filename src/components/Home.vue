@@ -4,6 +4,7 @@
       <div v-masonry-tile class="item" v-for="tile in tiles" :key="tile.selector">
         <CepEndereco v-if="tile.selector == 'cep-endereco' && tile.active == true" />
         <EnderecoCep v-if="tile.selector == 'endereco-cep' && tile.active == true" />
+        <Cnpj v-if="tile.selector == 'cnpj' && tile.active == true" />
         <Bcrypt v-if="tile.selector == 'bcrypt-generator' && tile.active == true" />
         <BcryptDecrypt v-if="tile.selector == 'bcrypt-decrypt' && tile.active == true" />
       </div>
@@ -37,6 +38,7 @@
 import CepEndereco from "./CepEndereco";
 import EnderecoCep from "./EnderecoCep";
 import Bcrypt from "./Bcrypt";
+import Cnpj from "./Cnpj";
 import BcryptDecrypt from "./BcryptDecrypt";
 import { EventBus } from "@/main.js";
 import { setTimeout } from "timers";
@@ -58,6 +60,12 @@ export default {
         active: true
       },
       {
+        selector: "cnpj",
+        icon: "fas fa-briefcase",
+        title: "Consulta Empresa por CNPJ",
+        active: true
+      },
+      {
         selector: "bcrypt-generator",
         icon: "fas fa-key",
         title: "Bcrypt Generator",
@@ -74,6 +82,7 @@ export default {
   components: {
     CepEndereco,
     EnderecoCep,
+    Cnpj,
     Bcrypt,
     BcryptDecrypt
   },

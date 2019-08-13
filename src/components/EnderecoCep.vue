@@ -33,6 +33,7 @@
 
 <script>
 import { EventBus } from "@/main.js";
+const axios = require("axios");
 export default {
   data: () => ({
     entries: [],
@@ -57,18 +58,18 @@ export default {
       this.isLoading = true;
 
       const url = `https://viacep.com.br/ws/${this.pesquisa.cep}/json/`;
-      fetch(url)
-        .then(res => res.json())
-        .then(res => {
-          this.count = res.length;
-          this.entries = res;
-        })
-        .catch(err => console.log(err))
-        .finally(() => (this.isLoading = false));
-
-      setTimeout(() => {
+      axios
+      .get(url)
+      .then(res => {
+        this.count = res.data.length;
+        this.entries = res.data;
+      })
+      .catch(error => {
+        console.log(error);
+      })
+      .finally(() => {
         EventBus.$emit("redraw");
-      }, 500);
+      });
     },
     fetchEntriesDebounced(val) {
       clearTimeout(this._timerId);

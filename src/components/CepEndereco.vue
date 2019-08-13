@@ -59,6 +59,7 @@
 import brasil from "../assets/brasil.json";
 import estados from "../assets/estados.json";
 import { EventBus } from "@/main.js";
+const axios = require("axios");
 export default {
   data: () => ({
     descriptionLimit: 60,
@@ -95,14 +96,19 @@ export default {
 
       // Lazily load input items
       const url = `https://viacep.com.br/ws/${this.pesquisa.uf}/${cidade}/${val}/json`;
-      fetch(url)
-        .then(res => res.json())
+      axios
+        .get(url)
         .then(res => {
-          this.count = res.length;
-          this.entries = res;
+          this.count = res.data.length;
+          this.entries = res.data;
         })
-        .catch(err => {})
-        .finally(() => (this.isLoading = false));
+        .catch(error => {
+          console.log(error)
+        })
+        .finally(() => {
+          EventBus.$emit("redraw");
+          this.isLoading = false;
+        })
     },
     fetchEntriesDebounced(val) {
       // cancel pending call
