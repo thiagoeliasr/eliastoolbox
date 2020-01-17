@@ -8,6 +8,7 @@
         <Bcrypt v-if="tile.selector == 'bcrypt-generator' && tile.active == true" />
         <BcryptDecrypt v-if="tile.selector == 'bcrypt-decrypt' && tile.active == true" />
         <QrCode v-if="tile.selector == 'qrcode-generator' && tile.active == true" />
+        <Ecovias v-if="tile.selector == 'ecovias' && tile.active == true" />
       </div>
     </div>
     <v-bottom-sheet v-model="sheet">
@@ -42,6 +43,7 @@ import Bcrypt from "./Bcrypt";
 import Cnpj from "./Cnpj";
 import BcryptDecrypt from "./BcryptDecrypt";
 import QrCode from "./QrCode";
+import Ecovias from "./Ecovias";
 import { EventBus } from "@/main.js";
 import { setTimeout } from "timers";
 
@@ -81,8 +83,14 @@ export default {
       },
       {
         selector: "qrcode-generator",
-        icon: "fas fa-key",
+        icon: "fas fa-qrcode",
         title: "QRCode Generator",
+        active: true
+      },
+      {
+        selector: "ecovias",
+        icon: "fas fa-road",
+        title: "Status Ecovias",
         active: true
       }
     ]
@@ -93,7 +101,8 @@ export default {
     Cnpj,
     Bcrypt,
     BcryptDecrypt,
-    QrCode
+    QrCode,
+    Ecovias
   },
   created: function() {
     EventBus.$on("redraw", this.redraw);

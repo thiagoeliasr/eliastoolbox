@@ -4,7 +4,7 @@
     <v-card-text>
       <v-text-field
         label="Valor"
-        prepend-icon="fas fa-search"
+        prepend-icon="fas fa-align-left"
         v-model="value"
         placeholder="Informe a string para gerar o QRCode"
       ></v-text-field>
