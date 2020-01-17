@@ -15,7 +15,17 @@
         <v-list-tile>
           <v-list-tile-content>
             <v-list-tile-title>Senha Criptografada</v-list-tile-title>
-            <v-list-tile-sub-title v-text="encodedString">{{ encodedString }}</v-list-tile-sub-title>
+            <v-list-tile-sub-title>
+              <v-icon left @click="copyClipboard()" class="copy-clipboard" title="Copiar para área de transferência">fas fa-copy</v-icon>
+              {{ encodedString }}
+            </v-list-tile-sub-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile v-if="copied">
+          <v-list-tile-content>
+            <v-list-tile-sub-title>
+              Copiado para área de transferência
+            </v-list-tile-sub-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -39,7 +49,8 @@ import { EventBus } from "@/main.js";
 export default {
   data: () => ({
     string: "",
-    encodedString: null
+    encodedString: null,
+    copied: false,
   }),
   methods: {
     encode() {
@@ -53,14 +64,26 @@ export default {
     clear() {
       this.string = "";
       this.encodedString = null;
+      this.copied = false;
 
       setTimeout(() => {
         EventBus.$emit("redraw");
       }, 500);
+    },
+    copyClipboard() {
+      this.$clipboard(this.encodedString);
+      this.copied = true;
+      setTimeout(() => {
+        this.copied = false;
+      }, 3000)
     }
   }
 };
 </script>
 
 <style>
+.copy-clipboard {
+  font-size: 18px;
+  margin-right: 0px;
+}
 </style>

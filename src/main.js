@@ -4,7 +4,10 @@ import App from './App.vue'
 import '@fortawesome/fontawesome-free/css/all.css'
 
 import {VueMasonryPlugin} from 'vue-masonry';
+import Clipboard from 'v-clipboard'
+
 Vue.use(VueMasonryPlugin)
+Vue.use(Clipboard)
 
 Vue.config.productionTip = false
 
