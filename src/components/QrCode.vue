@@ -1,6 +1,9 @@
 <template>
   <v-card color="cyan lighten-2" dark>
-    <v-card-title class="headline cyan lighten-3">Gerar QRCode</v-card-title>
+    <v-card-title class="headline cyan lighten-3">
+      <v-icon left>fas fa-qrcode</v-icon>
+      Gerar QRCode
+    </v-card-title>
     <v-card-text>
       <v-text-field
         label="Valor"
@@ -47,7 +50,16 @@ export default {
       }, 500);
     },
     fetch() {
-      EventBus.$emit("redraw");
+      setTimeout(() => {
+        EventBus.$emit("redraw");
+      }, 500);
+    }
+  },
+  watch: {
+    'value': function(val) {
+      setTimeout(() => {
+        EventBus.$emit("redraw");
+      }, 500);
     }
   }
 };

@@ -1,10 +1,27 @@
 <template>
   <v-card color="green lighten-2" dark>
-    <v-card-title class="headline green lighten-3">Status Ecovias</v-card-title>
+    <v-card-title class="headline green lighten-3">
+      <v-icon left>fas fa-road</v-icon>
+      Status Ecovias
+    </v-card-title>
+
+    <v-card-text v-if="loaded">
+      <v-select
+        prepend-icon="fas fa-camera"
+        :items="data.cameras"
+        label="Câmeras"
+        v-model="url_camera"
+      ></v-select>
+    </v-card-text>
+
     <v-divider></v-divider>
 
     <div v-if="!loaded" class="center-loading">
       <v-icon center class="rotating">fas fa-spinner</v-icon>
+    </div>
+
+    <div v-if="loaded && url_camera != null">
+      <v-img width="100%" :src="url_camera" @click="dialog=true" class="pointer"></v-img>
     </div>
 
     <div v-if="loaded">
@@ -40,7 +57,6 @@
         </v-list-tile-content>
       </v-list-tile>
       <v-spacer></v-spacer>
-
     </div>
 
     <v-card-actions>
@@ -50,6 +66,26 @@
         <v-icon right>fas fa-sync</v-icon>
       </v-btn>
     </v-card-actions>
+
+    <v-row justify="center">
+      <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+        <v-card>
+          <v-toolbar dark color="primary">
+            <v-btn icon dark @click="dialog = false">
+              <v-icon>fas fa-times</v-icon>
+            </v-btn>
+            <v-toolbar-title>Imagem</v-toolbar-title>
+            <v-spacer></v-spacer>
+          </v-toolbar>
+          <v-divider></v-divider>
+
+          <div v-if="loaded && url_camera != null && dialog">
+            <v-img height="100%" :src="url_camera"></v-img>
+          </div>
+
+        </v-card>
+      </v-dialog>
+    </v-row>
   </v-card>
 </template>
 
@@ -67,10 +103,14 @@ export default {
       operation_imigrantes: null,
       operation_anchieta: null,
       has_convoy: false,
-      convoy_message: null
+      convoy_message: null,
+      cameras: []
     },
+    url_camera: null,
+    description_camera: null,
     isLoading: false,
-    loaded: false
+    loaded: false,
+    dialog: false
   }),
   methods: {
     clear() {
@@ -81,7 +121,8 @@ export default {
         operation_imigrantes: null,
         operation_anchieta: null,
         has_convoy: false,
-        convoy_message: null
+        convoy_message: null,
+        cameras: []
       };
 
       setTimeout(() => {
@@ -91,24 +132,43 @@ export default {
     fetch() {
       this.isLoading = true;
       this.loaded = false;
+      this.url_camera = null;
       const url = `https://api.ecorodovias.com.br/anonymous/ecorodovias-portal/ecovias/playful-map`;
       axios
         .get(url)
         .then(res => {
+          if (!res.data.hasOwnProperty("TrafficOperation")) {
+            this.data.status = "Erro ao obter os dados da Ecovias";
+            return;
+          }
+
           this.data.status = res.data.TrafficOperation.Name;
           this.data.operation = res.data.TrafficOperation.Description;
           this.data.has_convoy = res.data.Convoy.HasConvoy;
           this.data.convoy_message = res.data.Convoy.Message;
 
           res.data.TrafficOperation.Roads.forEach(el => {
-            if (el.Name == 'Imigrantes') {
+            if (el.Name == "Imigrantes") {
               this.data.operation_imigrantes = this.convertLanes(el.Lanes);
             }
-            if (el.Name =='Anchieta') {
-              this.data.operation_anchieta = this.convertLanes(el.Lanes)
+            if (el.Name == "Anchieta") {
+              this.data.operation_anchieta = this.convertLanes(el.Lanes);
             }
-          })
+          });
 
+          res.data.Cameras.forEach(el => {
+            if (!el.hasOwnProperty("Cameras")) {
+              return;
+            }
+            el.Cameras.forEach(camera => {
+              this.data.cameras.push({
+                text: camera.Description + " (Km: " + camera.KM + ")",
+                value: camera.Url
+              });
+            });
+          });
+
+          console.log(this.data.cameras);
           this.loaded = true;
           this.isLoading = false;
         })
@@ -120,33 +180,35 @@ export default {
         });
     },
     convertLanes(lanes) {
-        let str_lanes = lanes.replace(/S/g, '↑')
-        str_lanes = str_lanes.replace(/D/g, '↓')
-        str_lanes = str_lanes.replace(/X/g, 'x')
-        str_lanes = str_lanes.replace(/Z/g, 'x')
-        return str_lanes;
+      let str_lanes = lanes.replace(/S/g, "↑");
+      str_lanes = str_lanes.replace(/D/g, "↓");
+      str_lanes = str_lanes.replace(/X/g, "x");
+      str_lanes = str_lanes.replace(/Z/g, "x");
+      return str_lanes;
     }
-  },
-
+  }
 };
 </script>
 
 <style>
 @-webkit-keyframes rotating {
-    from{
-        -webkit-transform: rotate(0deg);
-    }
-    to{
-        -webkit-transform: rotate(360deg);
-    }
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 .rotating {
-    -webkit-animation: rotating 2s linear infinite;
+  -webkit-animation: rotating 2s linear infinite;
 }
 
 .center-loading {
   text-align: center;
   padding: 15px;
+}
+.pointer {
+  cursor: pointer;
 }
 </style>

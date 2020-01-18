@@ -1,6 +1,9 @@
 <template>
   <v-card color="indigo lighten-2" dark>
-    <v-card-title class="headline indigo lighten-3">Pesquisar por Endereço</v-card-title>
+    <v-card-title class="headline indigo lighten-3">
+      <v-icon left>fas fa-map-marker</v-icon>
+      Pesquisar por Endereço
+    </v-card-title>
     <v-card-text>
       <v-select prepend-icon="fas fa-flag" :items="estados" label="Estado" v-model="pesquisa.uf"></v-select>
     </v-card-text>

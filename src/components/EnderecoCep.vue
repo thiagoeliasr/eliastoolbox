@@ -1,6 +1,9 @@
 <template>
   <v-card color="blue-grey lighten-2" dark>
-    <v-card-title class="headline blue-grey lighten-3">Pesquisar endereço pelo CEP</v-card-title>
+    <v-card-title class="headline blue-grey lighten-3">
+      <v-icon left>fas fa-city</v-icon>
+      Endereço pelo CEP
+      </v-card-title>
     <v-card-text>
       <v-text-field
         label="CEP"

@@ -1,6 +1,9 @@
 <template>
   <v-card color="orange lighten-2" dark>
-    <v-card-title class="headline orange lighten-3">Bcrypt Decrypt</v-card-title>
+    <v-card-title class="headline orange lighten-3">
+      <v-icon left>fas fa-key</v-icon>
+      Bcrypt Decrypt
+    </v-card-title>
     <v-card-text>
       <v-text-field
         label="String a ser comparada"

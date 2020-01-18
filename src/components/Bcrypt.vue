@@ -1,6 +1,9 @@
 <template>
   <v-card color="teal lighten-2" dark>
-    <v-card-title class="headline teal lighten-3">Bcrypt Generator</v-card-title>
+    <v-card-title class="headline teal lighten-3">
+      <v-icon left>fas fa-key</v-icon>
+      Bcrypt Generator
+    </v-card-title>
     <v-card-text>
       <v-text-field
         label="String"
@@ -74,8 +77,12 @@ export default {
       this.$clipboard(this.encodedString);
       this.copied = true;
       setTimeout(() => {
-        this.copied = false;
-      }, 3000)
+        EventBus.$emit("redraw");
+        setTimeout(() => {
+          this.copied = false;
+          EventBus.$emit("redraw");
+        }, 3000)
+      }, 500);
     }
   }
 };

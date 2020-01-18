@@ -1,6 +1,9 @@
 <template>
   <v-card color="cyan lighten-2" dark>
-    <v-card-title class="headline cyan lighten-3">Pesquisar CNPJ</v-card-title>
+    <v-card-title class="headline cyan lighten-3">
+      <v-icon left>fas fa-briefcase</v-icon>
+      Pesquisar CNPJ
+    </v-card-title>
     <v-card-text>
       <v-text-field
         label="CNPJ"
