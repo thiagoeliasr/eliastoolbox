@@ -122,8 +122,11 @@ export default {
           this.loaded = true;
           this.isLoading = false;
         })
-        .catch(error => {
-          console.log(error);
+        .catch(() => {
+          EventBus.$emit('snackbar', { 
+            text: "Erro ao obter as marcas da FIPE", 
+            color: "red lighten-2"
+          });
         })
         .finally(() => {
           EventBus.$emit("redraw");
@@ -136,7 +139,6 @@ export default {
       axios
         .get(url)
         .then(res => {
-          console.log(res);
           if (
             !res.hasOwnProperty("data") &&
             !res.data.hasOwnProperty("modelos")
@@ -154,8 +156,11 @@ export default {
           this.loaded = true;
           this.isLoading = false;
         })
-        .catch(error => {
-          console.log(error);
+        .catch(() => {
+          EventBus.$emit('snackbar', { 
+            text: "Erro ao obter os modelos da FIPE", 
+            color: "red lighten-2"
+          });
         })
         .finally(() => {
           EventBus.$emit("redraw");
@@ -182,8 +187,11 @@ export default {
           this.loaded = true;
           this.isLoading = false;
         })
-        .catch(error => {
-          console.log(error);
+        .catch(() => {
+          EventBus.$emit('snackbar', { 
+            text: "Erro ao obter os anos para o modelo escolhido", 
+            color: "red lighten-2"
+          });
         })
         .finally(() => {
           EventBus.$emit("redraw");
@@ -201,13 +209,15 @@ export default {
           }
 
           this.resultados = res.data;
-          console.log(this.resultados);
 
           this.loaded = true;
           this.isLoading = false;
         })
-        .catch(error => {
-          console.log(error);
+        .catch(() => {
+          EventBus.$emit('snackbar', { 
+            text: "Erro ao obter os valores da FIPE para o veículo", 
+            color: "red lighten-2"
+          });
         })
         .finally(() => {
           EventBus.$emit("redraw");

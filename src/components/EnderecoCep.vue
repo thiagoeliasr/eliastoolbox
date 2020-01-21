@@ -1,9 +1,8 @@
 <template>
   <v-card color="blue-grey lighten-2" dark>
     <v-card-title class="headline blue-grey lighten-3">
-      <v-icon left>fas fa-city</v-icon>
-      Endereço pelo CEP
-      </v-card-title>
+      <v-icon left>fas fa-city</v-icon>Endereço pelo CEP
+    </v-card-title>
     <v-card-text>
       <v-text-field
         label="CEP"
@@ -57,22 +56,25 @@ export default {
         EventBus.$emit("redraw");
       }, 500);
     },
-    fetch(val) {
+    fetch() {
       this.isLoading = true;
 
       const url = `https://viacep.com.br/ws/${this.pesquisa.cep}/json/`;
       axios
-      .get(url)
-      .then(res => {
-        this.count = res.data.length;
-        this.entries = res.data;
-      })
-      .catch(error => {
-        console.log(error);
-      })
-      .finally(() => {
-        EventBus.$emit("redraw");
-      });
+        .get(url)
+        .then(res => {
+          this.count = res.data.length;
+          this.entries = res.data;
+        })
+        .catch(() => {
+          EventBus.$emit("snackbar", {
+            text: "Erro ao consultar o CEP. Tente novamente",
+            color: "red lighten-2"
+          });
+        })
+        .finally(() => {
+          EventBus.$emit("redraw");
+        });
     },
     fetchEntriesDebounced(val) {
       clearTimeout(this._timerId);

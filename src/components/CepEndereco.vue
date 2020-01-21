@@ -105,8 +105,11 @@ export default {
           this.count = res.data.length;
           this.entries = res.data;
         })
-        .catch(error => {
-          console.log(error)
+        .catch(() => {
+          EventBus.$emit("snackbar", {
+            text: "Erro ao pesquisar o CEP pelo endereço. Tente novamente",
+            color: "red lighten-2"
+          });
         })
         .finally(() => {
           EventBus.$emit("redraw");
@@ -135,21 +138,11 @@ export default {
         };
       });
 
-      setTimeout(() => {
-        EventBus.$emit("redraw");
-      }, 400);
-
       return fields;
     },
     items() {
       return this.entries.map(entry => {
-        let Description =
-          entry.logradouro.length > this.descriptionLimit
-            ? entry.logradouro.slice(0, this.descriptionLimit) + "..."
-            : entry.logradouro;
-
-        Description += ` - ${entry.complemento} (${entry.cep})`;
-
+        let Description = entry.logradouro;
         return Object.assign({}, entry, { Description });
       });
     }
@@ -157,13 +150,16 @@ export default {
 
   watch: {
     search: function(val) {
-      if (val.length < 3) return;
+      if (val && val.length < 3) return;
       if (this.isLoading) return;
 
       this.fetchEntriesDebounced(val);
     },
 
     "pesquisa.uf": function() {
+      if (!this.pesquisa.uf) {
+        return;
+      }
       this.cidades = this.brasil[this.pesquisa.uf].cidades;
     }
   }

@@ -24,13 +24,6 @@
             </v-list-tile-sub-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile v-if="copied">
-          <v-list-tile-content>
-            <v-list-tile-sub-title>
-              Copiado para área de transferência
-            </v-list-tile-sub-title>
-          </v-list-tile-content>
-        </v-list-tile>
       </v-list>
     </v-expand-transition>
     <v-card-actions>
@@ -53,7 +46,6 @@ export default {
   data: () => ({
     string: "",
     encodedString: null,
-    copied: false,
   }),
   methods: {
     encode() {
@@ -67,7 +59,6 @@ export default {
     clear() {
       this.string = "";
       this.encodedString = null;
-      this.copied = false;
 
       setTimeout(() => {
         EventBus.$emit("redraw");
@@ -75,13 +66,9 @@ export default {
     },
     copyClipboard() {
       this.$clipboard(this.encodedString);
-      this.copied = true;
+      EventBus.$emit("snackbar", { text: "Copiado para a área de transferência" });
       setTimeout(() => {
         EventBus.$emit("redraw");
-        setTimeout(() => {
-          this.copied = false;
-          EventBus.$emit("redraw");
-        }, 3000)
       }, 500);
     }
   }

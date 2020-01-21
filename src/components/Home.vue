@@ -34,6 +34,11 @@
         </v-list-tile>
       </v-list>
     </v-bottom-sheet>
+
+    <v-snackbar v-model="snackbar" :color="snackbar_color">
+      {{ snackbar_text }}
+      <v-btn icon text @click="snackbar = false"><v-icon>fas fa-times</v-icon></v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -52,6 +57,9 @@ import { setTimeout } from "timers";
 export default {
   data: () => ({
     sheet: false,
+    snackbar: false,
+    snackbar_text: null,
+    snackbar_color: 'success',
     tiles: [
       {
         selector: "cep-endereco",
@@ -101,7 +109,6 @@ export default {
         title: "Consulta FIPE",
         active: true
       }
-      
     ]
   }),
   components: {
@@ -115,7 +122,15 @@ export default {
     Fipe
   },
   created: function() {
+    const home = this;
     EventBus.$on("redraw", this.redraw);
+    EventBus.$on("snackbar", function (payload) {
+      home.snackbar = true;
+      home.snackbar_text = payload.text;
+      if (payload.hasOwnProperty('color')) {
+        home.snackbar_color = payload.color;
+      }
+    });
   },
   beforeDestroy: function() {
     EventBus.off("redraw");
@@ -128,7 +143,7 @@ export default {
     },
     redraw() {
       this.$redrawVueMasonry();
-    }
+    },
   }
 };
 </script>

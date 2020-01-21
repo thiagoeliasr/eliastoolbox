@@ -67,7 +67,7 @@
       </v-btn>
     </v-card-actions>
 
-    <v-row justify="center">
+    <div justify="center">
       <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
         <v-card>
           <v-toolbar dark color="primary">
@@ -85,7 +85,7 @@
 
         </v-card>
       </v-dialog>
-    </v-row>
+    </div>
   </v-card>
 </template>
 
@@ -168,12 +168,14 @@ export default {
             });
           });
 
-          console.log(this.data.cameras);
           this.loaded = true;
           this.isLoading = false;
         })
-        .catch(error => {
-          console.log(error);
+        .catch(() => {
+          EventBus.$emit('snackbar', { 
+            text: "Erro ao obter os dados da Ecovias. Tente novamente", 
+            color: "red lighten-2"
+          });
         })
         .finally(() => {
           EventBus.$emit("redraw");
