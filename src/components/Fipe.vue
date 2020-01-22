@@ -9,21 +9,29 @@
     </v-card-text>
 
     <v-card-text v-if="tipo">
-      <v-select
-        prepend-icon="fas fa-angle-right"
-        :items="items.marcas"
-        label="Marca"
+      <v-autocomplete
         v-model="marca"
-      ></v-select>
+        :items="items.marcas"
+        color="white"
+        hide-no-data
+        hide-selected
+        label="Marca"
+        placeholder="Comece a digitar para pesquisar"
+        prepend-icon="fas fa-angle-right"
+      ></v-autocomplete>
     </v-card-text>
 
     <v-card-text v-if="marca">
-      <v-select
+      <v-autocomplete
         prepend-icon="fas fa-car-side"
         :items="items.modelos"
+        color="white"
+        hide-no-data
+        hide-selected
         label="Modelo"
         v-model="modelo"
-      ></v-select>
+        placeholder="Comece a digitar para pesquisar"
+      ></v-autocomplete>
     </v-card-text>
 
     <v-card-text v-if="modelo">
