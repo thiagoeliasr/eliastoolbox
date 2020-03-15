@@ -86,9 +86,9 @@ export default {
         .then(res => {
           this.data = res.data;
         })
-        .catch(() => {
-          EventBus.$emit('snackbar', { 
-            text: "Erro ao obter os dados para o CNPJ informado: " + error, 
+        .catch((error) => {
+          EventBus.$emit('snackbar', {
+            text: "Erro ao obter os dados para o CNPJ informado: " + error,
             color: "red lighten-2"
           });
         })

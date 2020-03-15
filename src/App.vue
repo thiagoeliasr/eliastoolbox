@@ -2,7 +2,7 @@
   <v-app>
     <v-toolbar color="indigo" app>
       <v-toolbar-title class="headline white--text">
-        <v-icon class="white--text">fas fa-toolbox</v-icon>
+        <v-icon class="white--text icon-title">fas fa-toolbox</v-icon>
         <span class="title"> Elias Toolbox</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>

@@ -56,7 +56,7 @@ export default {
     }
   },
   watch: {
-    'value': function(val) {
+    'value': function() {
       setTimeout(() => {
         EventBus.$emit("redraw");
       }, 500);
