@@ -1,0 +1,15 @@
+{
+  "name": "Elias Toolbox",
+  "short_name": "Toolbox",
+  "start_url": "index.html",
+  "display": "standalone",
+  "theme_color": "#3f51b5",
+  "background_color": "#fff",
+  "icons": [
+    {
+      "src": "android-chrome-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ]
+}

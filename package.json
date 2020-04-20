@@ -1,5 +1,5 @@
 {
-  "name": "consultacep",
+  "name": "eliastoolbox",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -16,7 +16,8 @@
     "v-clipboard": "^2.2.2",
     "vue": "^2.6.11",
     "vue-masonry": "^0.11.8",
-    "vuetify": "^1.5.24"
+    "vuetify": "^1.5.24",
+    "workbox-webpack-plugin": "^5.1.2"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",

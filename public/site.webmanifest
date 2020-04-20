@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Elias Toolbox",
+    "short_name": "Toolbox",
     "icons": [
         {
             "src": "/android-chrome-144x144.png",
@@ -8,7 +8,7 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
+    "theme_color": "#3f51b5",
     "background_color": "#ffffff",
     "display": "standalone"
 }

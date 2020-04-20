@@ -1,6 +1,11 @@
+const { GenerateSW } = require("workbox-webpack-plugin");
 
 module.exports = {
-  // publicPath: '/toolbox/',
+
+  configureWebpack: {
+    plugins: [new GenerateSW()]
+  },
+
   css: {
     loaderOptions: {
       sass: {
@@ -11,4 +16,5 @@ module.exports = {
       }
     }
   }
+
 }
