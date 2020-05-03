@@ -3,8 +3,8 @@
   "short_name": "Toolbox",
   "start_url": "index.html",
   "display": "standalone",
-  "theme_color": "#3f51b5",
-  "background_color": "#fff",
+  "theme_color": "#36469e",
+  "background_color": "#ffffff",
   "icons": [
     {
       "src": "android-chrome-144x144.png",

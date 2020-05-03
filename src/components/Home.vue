@@ -10,11 +10,13 @@
         <QrCode v-if="tile.selector == 'qrcode-generator' && tile.active == true" />
         <Ecovias v-if="tile.selector == 'ecovias' && tile.active == true" />
         <Fipe v-if="tile.selector == 'fipe' && tile.active == true" />
+        <CpfGen v-if="tile.selector == 'cpf' && tile.active == true" />
+        <CnpjGen v-if="tile.selector == 'cnpj-gen' && tile.active == true" />
       </div>
     </div>
     <v-bottom-sheet v-model="sheet">
       <template v-slot:activator>
-        <v-btn color="blue darken-3" dark small fixed top right fab>
+        <v-btn class="btn-filter" color="blue darken-3" dark small fixed top right fab>
           <v-icon>fas fa-filter</v-icon>
         </v-btn>
       </template>
@@ -51,6 +53,8 @@ import BcryptDecrypt from "./BcryptDecrypt";
 import QrCode from "./QrCode";
 import Ecovias from "./Ecovias";
 import Fipe from "./Fipe";
+import CpfGen from "./CpfGen";
+import CnpjGen from "./CnpjGen";
 import { EventBus } from "@/main.js";
 import { setTimeout } from "timers";
 
@@ -108,6 +112,18 @@ export default {
         icon: "fas fa-car-alt",
         title: "Consulta FIPE",
         active: true
+      },
+      {
+        selector: "cpf",
+        icon: "fas fa-address-card",
+        title: "Gerar CPF",
+        active: true
+      },
+      {
+        selector: "cnpj-gen",
+        icon: "fas fa-address-card",
+        title: "Gerar CNPJ",
+        active: true
       }
     ]
   }),
@@ -119,7 +135,9 @@ export default {
     BcryptDecrypt,
     QrCode,
     Ecovias,
-    Fipe
+    Fipe,
+    CpfGen,
+    CnpjGen
   },
   created: function() {
     const home = this;
@@ -149,4 +167,9 @@ export default {
 </script>
 
 <style lang="scss">
+.v-btn {
+  &.btn-filter {
+    top: 8px;
+  }
+}
 </style>
