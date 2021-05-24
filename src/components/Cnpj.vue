@@ -1,4 +1,5 @@
 <template>
+
   <v-card color="cyan lighten-2" dark>
     <v-card-title class="headline cyan lighten-3">
       <v-icon left>fas fa-briefcase</v-icon>
@@ -53,6 +54,7 @@
       </v-btn>
     </v-card-actions>
   </v-card>
+
 </template>
 
 <script>
@@ -80,11 +82,28 @@ export default {
     },
     fetch(val) {
       this.isLoading = true;
-      const url = `http://thiagoelias.org:8000/fetch?url=https://www.receitaws.com.br/v1/cnpj/${val}?callback`;
+      const url = `https://brasilapi.com.br/api/cnpj/v1/${val}`;
       axios
         .get(url)
         .then(res => {
-          this.data = res.data;
+          this.data = {
+            CNPJ: res.data.cnpj,
+            FANTASIA: res.data.nome_fantasia,
+            RAZAO_SOCIAL: res.data.razao_social,
+            OPCAO_MEI: res.data.opcao_pelo_mei ? 'Sim' : 'Não',
+            OPCAO_SIMPLES: res.data.opcao_pelo_simples ? 'Sim' : 'Não',
+            TIPO: res.data.descricao_matriz_filial,
+            LOGRADOURO: res.data.logradouro,
+            NUMERO: res.data.numero,
+            UF: res.data.uf,
+            CEP: res.data.cep,
+            COD_MUNICIPIO: res.data.codigo_municipio,
+            TELEFONE1: res.data.ddd_telefone_1,
+            TELEFONE2: res.data.ddd_telefone_2,
+            TELEFONE_FAX: res.data.ddd_fax,
+            CNAE_FISCAL: res.cnae_fiscal,
+            DESCRICAO_CNAE: res.cnae_fiscal_descricao,
+          };
         })
         .catch((error) => {
           EventBus.$emit('snackbar', {
