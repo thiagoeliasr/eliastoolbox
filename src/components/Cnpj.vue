@@ -20,7 +20,7 @@
     <div v-if="data">
       <v-list-tile v-for="(field, i) in data" :key="i">
         <v-list-tile-content v-if="i != 'atividade_principal' && i != 'atividades_secundarias'">
-          <v-list-tile-sub-title v-text="i"></v-list-tile-sub-title>
+          <v-list-tile-sub-title style="font-weight: 800" v-text="i"></v-list-tile-sub-title>
           <v-list-tile-title v-text="field"></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
@@ -97,12 +97,13 @@ export default {
             NUMERO: res.data.numero,
             UF: res.data.uf,
             CEP: res.data.cep,
-            COD_MUNICIPIO: res.data.codigo_municipio,
+            MUNICIPIO: res.data.municipio,
             TELEFONE1: res.data.ddd_telefone_1,
             TELEFONE2: res.data.ddd_telefone_2,
             TELEFONE_FAX: res.data.ddd_fax,
-            CNAE_FISCAL: res.cnae_fiscal,
-            DESCRICAO_CNAE: res.cnae_fiscal_descricao,
+            CNAE_FISCAL: res.data.cnae_fiscal,
+            DESCRICAO_CNAE: res.data.cnae_fiscal_descricao,
+            INICIO_ATIVIDADE: res.data.data_inicio_atividade
           };
         })
         .catch((error) => {
